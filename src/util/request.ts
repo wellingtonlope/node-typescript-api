@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
 /* eslint-disable @typescript-eslint/no-empty-interface */
 export interface RequestConfig extends AxiosRequestConfig {}

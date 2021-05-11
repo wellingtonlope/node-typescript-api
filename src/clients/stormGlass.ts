@@ -1,5 +1,6 @@
 import { InternalError } from '@src/util/errors/internal-error';
 import config, { IConfig } from 'config';
+// Another way to have similar behaviour to TS namespaces
 import * as HTTPUtil from '@src/util/request';
 
 export interface StormGlassPointSource {
@@ -7,7 +8,7 @@ export interface StormGlassPointSource {
 }
 
 export interface StormGlassPoint {
-	readonly time: string;
+	time: string;
 	readonly waveHeight: StormGlassPointSource;
 	readonly waveDirection: StormGlassPointSource;
 	readonly swellDirection: StormGlassPointSource;
@@ -32,6 +33,19 @@ export interface ForecastPoint {
 	windSpeed: number;
 }
 
+/**
+ * This error type is used when a request reaches out to the StormGlass API but returns an error
+ */
+export class StormGlassUnexpectedResponseError extends InternalError {
+	constructor(message: string) {
+		super(message);
+	}
+}
+
+/**
+ * This error type is used when something breaks before the request reaches out to the StormGlass API
+ * eg: Network error, or request validation error
+ */
 export class ClientRequestError extends InternalError {
 	constructor(message: string) {
 		const internalMessage =
@@ -48,7 +62,10 @@ export class StormGlassResponseError extends InternalError {
 	}
 }
 
-const stormGlassResourceConfig: IConfig = config.get(
+/**
+ * We could have proper type for the configuration
+ */
+const stormglassResourceConfig: IConfig = config.get(
 	'App.resources.StormGlass'
 );
 
@@ -62,19 +79,22 @@ export class StormGlass {
 	public async fetchPoints(lat: number, lng: number): Promise<ForecastPoint[]> {
 		try {
 			const response = await this.request.get<StormGlassForecastResponse>(
-				`${stormGlassResourceConfig.get(
+				`${stormglassResourceConfig.get(
 					'apiUrl'
 				)}/weather/point?lat=${lat}&lng=${lng}&params=${
 					this.stormGlassAPIParams
 				}&source=${this.stormGlassAPISource}`,
 				{
 					headers: {
-						Authorization: stormGlassResourceConfig.get('apiToken'),
+						Authorization: stormglassResourceConfig.get('apiToken'),
 					},
 				}
 			);
 			return this.normalizeResponse(response.data);
 		} catch (err) {
+			/**
+			 * This is handling the Axios errors specifically
+			 */
 			if (HTTPUtil.Request.isRequestError(err)) {
 				throw new StormGlassResponseError(
 					`Error: ${JSON.stringify(err.response.data)} Code: ${
@@ -85,7 +105,6 @@ export class StormGlass {
 			throw new ClientRequestError(err.message);
 		}
 	}
-
 	private normalizeResponse(
 		points: StormGlassForecastResponse
 	): ForecastPoint[] {
