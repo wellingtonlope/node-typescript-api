@@ -6,9 +6,9 @@ import { User } from '@src/models/user';
 import AuthService from '@src/services/auth';
 
 describe('Beach forecast functional tests', () => {
-	const defaultUser = {
+	const defaultUser: User = {
 		name: 'John Doe',
-		email: 'john@mail.com',
+		email: 'john3@mail.com',
 		password: '1234',
 	};
 	let token: string;
@@ -40,6 +40,7 @@ describe('Beach forecast functional tests', () => {
 				lng: '151.289824',
 				params: /(.*)/,
 				source: 'noaa',
+				end: /(.*)/,
 			})
 			.reply(200, stormGlassWeather3HoursFixture);
 

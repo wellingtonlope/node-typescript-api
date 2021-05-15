@@ -1,16 +1,12 @@
 import { StormGlass } from '@src/clients/stormGlass';
 import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass_normalized_response_3_hours.json';
-import {
-	Forecast,
-	ForecastProcessingInternalError,
-} from '@src/services/forecast';
+import { Forecast, ForecastProcessingInternalError } from '../forecast';
 import { Beach, GeoPosition } from '@src/models/beach';
 
 jest.mock('@src/clients/stormGlass');
 
 describe('Forecast Service', () => {
 	const mockedStormGlassService = new StormGlass() as jest.Mocked<StormGlass>;
-
 	it('should return the forecast for mutiple beaches in the same hour with different ratings ordered by rating', async () => {
 		mockedStormGlassService.fetchPoints.mockResolvedValueOnce([
 			{

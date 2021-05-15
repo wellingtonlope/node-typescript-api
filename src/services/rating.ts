@@ -1,5 +1,5 @@
-import { ForecastPoint } from '@src/clients/stormGlass';
 import { Beach, GeoPosition } from '@src/models/beach';
+import { ForecastPoint } from '@src/clients/stormGlass';
 
 // meters
 const waveHeights = {

@@ -5,11 +5,11 @@ import AuthService from '@src/services/auth';
 describe('Beaches functional tests', () => {
 	const defaultUser = {
 		name: 'John Doe',
-		email: 'john@mail.com',
+		email: 'john2@mail.com',
 		password: '1234',
 	};
-	let token: string;
 
+	let token: string;
 	beforeEach(async () => {
 		await Beach.deleteMany({});
 		await User.deleteMany({});
@@ -30,13 +30,12 @@ describe('Beaches functional tests', () => {
 				.post('/beaches')
 				.set({ 'x-access-token': token })
 				.send(newBeach);
-
 			expect(response.status).toBe(201);
 			//Object containing matches the keys and values, even if includes other keys such as id.
 			expect(response.body).toEqual(expect.objectContaining(newBeach));
 		});
 
-		it('should return 422 when there is a validation error', async () => {
+		it('should return validation error when a field is invalid', async () => {
 			const newBeach = {
 				lat: 'invalid_string',
 				lng: 151.289824,
@@ -48,12 +47,12 @@ describe('Beaches functional tests', () => {
 				.set({ 'x-access-token': token })
 				.send(newBeach);
 
-			expect(response.status).toBe(422);
+			//tests will be broken, not middleware
+			expect(response.status).toBe(400);
 			expect(response.body).toEqual({
-				code: 422,
-				error: 'Unprocessable Entity',
-				message:
-					'Beach validation failed: lat: Cast to Number failed for value "invalid_string" at path "lat"',
+				code: 400,
+				error: 'Bad Request',
+				message: 'request.body.lat should be number',
 			});
 		});
 

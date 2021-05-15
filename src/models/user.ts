@@ -35,6 +35,7 @@ const schema = new mongoose.Schema(
 		},
 	}
 );
+
 /**
  * Validates the email and throws a validation error, otherwise it will throw a 500
  */
@@ -51,12 +52,11 @@ schema.pre<UserModel>('save', async function (): Promise<void> {
 	if (!this.password || !this.isModified('password')) {
 		return;
 	}
-
 	try {
 		const hashedPassword = await AuthService.hashPassword(this.password);
 		this.password = hashedPassword;
-	} catch (error) {
-		logger.error(`Error hashing the password for the user ${this.name}`);
+	} catch (err) {
+		logger.error(`Error hashing the password for the user ${this.name}`, err);
 	}
 });
 

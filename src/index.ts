@@ -1,6 +1,6 @@
 import { SetupServer } from './server';
-import config from 'config';
 import logger from './logger';
+import config from 'config';
 
 enum ExitStatus {
 	Failure = 1,
@@ -31,7 +31,7 @@ process.on('uncaughtException', (error) => {
 			process.on(sig, async () => {
 				try {
 					await server.close();
-					logger.info('App exited with success');
+					logger.info(`App exited with success`);
 					process.exit(ExitStatus.Success);
 				} catch (error) {
 					logger.error(`App exited with error: ${error}`);
