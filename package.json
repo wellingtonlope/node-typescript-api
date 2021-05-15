@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-		"url": "git+https://github.com/wellingtonlope/node-typescript-api.git"
+    "url": "git+https://github.com/wellingtonlope/node-typescript-api.git"
   },
   "keywords": [
     "node",
@@ -25,26 +25,30 @@
     "typescript",
     "api"
   ],
-	"author": "Wellington Lopes",
+  "author": "Wellington Lopes",
   "license": "MIT",
   "bugs": {
-		"url": "https://github.com/wellingtonlope/node-typescript-api/issues"
+    "url": "https://github.com/wellingtonlope/node-typescript-api/issues"
   },
-	"homepage": "https://github.com/wellingtonlope/node-typescript-api#readme",
+  "homepage": "https://github.com/wellingtonlope/node-typescript-api#readme",
   "dependencies": {
     "@overnightjs/core": "^1.7.4",
     "axios": "^0.19.2",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "config": "^3.3.1",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "module-alias": "^2.2.2",
     "mongoose": "^5.9.18"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
+    "@types/bcrypt": "^5.0.0",
     "@types/config": "^0.0.36",
     "@types/express": "^4.17.6",
     "@types/jest": "^25.2.2",
+    "@types/jsonwebtoken": "^8.5.1",
     "@types/module-alias": "^2.0.0",
     "@types/mongoose": "^5.7.22",
     "@types/nock": "^11.1.0",
