@@ -3,11 +3,11 @@ import { Server } from '@overnightjs/core';
 import express, { Application } from 'express';
 import expressPino from 'express-pino-logger';
 import cors from 'cors';
-import { ForecastController } from './controllers/forecast';
+import { ForecastController } from '@src/controllers/forecast';
 import * as database from '@src/database';
-import { BeachesController } from './controllers/beaches';
-import { UsersController } from './controllers/users';
-import logger from './logger';
+import { BeachesController } from '@src/controllers/beaches';
+import { UsersController } from '@src/controllers/users';
+import logger from '@src/logger';
 
 export class SetupServer extends Server {
 	/*
